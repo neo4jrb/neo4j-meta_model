@@ -1,0 +1,28 @@
+doctype html
+html
+head
+  title MetaModel
+
+  javascript:
+    var meta_model_root_path = '#{root_path}';
+
+  = stylesheet_link_tag    'meta_model', media: 'all'
+  = javascript_include_tag 'meta_model'
+
+  = csrf_meta_tags
+
+body
+  nav.navbar.navbar-default role="navigation"
+    .container-fluid
+      ul.nav.navbar-nav
+        li
+          = link_to 'Models', root_path
+
+        li
+          = link_to 'Admin', meta_path
+
+  .container
+    = yield
+
+  = action_and_controller_javascript_include_tag
+

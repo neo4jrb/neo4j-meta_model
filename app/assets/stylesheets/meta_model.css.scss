@@ -1,0 +1,113 @@
+/*
+ *
+ *= require _bootstrap
+ *= require_self
+ */
+
+#accordion .glyphicon { margin-right:10px; }
+ 
+#model-list {
+  margin-top: 4em;
+}
+
+
+label {
+  width: 100%;
+}
+
+[data-ember-action] {
+  cursor: pointer;
+}
+
+// Stolen and SCSSized from http://bootsnipp.com/snippets/featured/accordion-list-group-menu
+.nested-list-group {
+  >.list-group {
+    .list-group-item:first-child {
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+    }
+    .list-group-item {
+      border-width: 1px 0;
+    }
+
+    margin-bottom: 0;
+  }
+  .list-group-item {
+    border-radius:0;
+  }
+
+  .list-group .list-group {
+    margin: 0;
+    margin-top: 10px;
+  }
+  .list-group-item li.list-group-item {
+    margin: 0 -15px;
+    border-top: 1px solid #ddd;
+    border-bottom: 0;
+    padding-left: 30px;
+    &:last-child {padding-bottom: 0;}
+  }
+
+  div.list-group {
+    div.list-group {margin: 0;}
+
+    .list-group a.list-group-item {
+      border-top: 1px solid #ddd;
+      border-bottom: 0;
+      padding-left: 30px;
+    }
+  }
+}
+
+$relationship-arrow-length: 60px;
+
+#has-associations-table {
+  td {
+    line-height: 4em;
+  }
+
+  .relationship {
+    display: inline-block;
+
+    &:before {
+      content: '';
+      border: 1px solid black;
+      height: 1px;
+      width: $relationship-arrow-length;
+      display: inline-block;
+      position: relative;
+      margin: 5px;
+    }
+
+    &:after {
+      content: '';
+      border: 1px solid black;
+      height: 1px;
+      width: $relationship-arrow-length;
+      display: inline-block;
+      position: relative;
+      margin: 5px;
+      margin-right: -3px;
+    }
+  }
+
+  .source-join-type {
+    position: absolute;
+    transform: translate(-$relationship-arrow-length - 5px,-14px);
+  }
+
+  .destination-join-type {
+    position: absolute;
+    transform: translate(5px,-14px);
+  }
+
+  .source-association-name {
+    position: absolute;
+    transform: translate(-$relationship-arrow-length - 5px,14px);
+  }
+
+  .destination-association-name {
+    position: absolute;
+    transform: translate(5px,14px);
+  }
+}

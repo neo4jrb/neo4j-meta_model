@@ -1,0 +1,39 @@
+= form_tag({action: :update}, method: :put, class: 'form-horizontal', role: :form) do
+
+  .form-group
+    label
+      .col-sm-2.control-label Class Name
+      .col-sm-10 = text_field_tag 'model_data[class_name]', @model.class_name, class: 'form-control'
+
+  .form-group
+    label
+      .col-sm-2.control-label Inherits from
+      .col-sm-10 = select_tag 'model_data[superclass_model]', options_from_collection_for_select(([OpenStruct.new] + @models.to_a), 'class_name', 'class_name', @model.superclass_model.try(:class_name)), class: 'form-control'
+
+  .properties.row
+    h2
+      | Properties 
+      a.add.btn.btn-default Add Property
+
+    - @model.properties.each do |property|
+      .well.property.col-sm-6
+        i.glyphicon.glyphicon-remove-circle.close.pull-right
+
+        .form-group
+          label
+            .col-sm-2.control-label Name
+            .col-sm-10 = text_field_tag 'model_data[properties][][name]', property.name, class: 'form-control'
+
+        .form-group
+          label
+            .col-sm-2.control-label Type
+            .col-sm-10 = select_tag 'model_data[properties][][type]', options_for_select(['String', 'DateTime'], property.type), class: 'form-control'
+
+
+  .form-group
+    = submit_tag 'Update', class: 'btn btn-primary'
+
+scss:
+  label {
+    width: 100%;
+  }

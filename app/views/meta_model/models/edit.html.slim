@@ -1,0 +1,6 @@
+
+= form_tag({action: :update}, method: 'put', class: 'form-horizontal', role: 'form') do
+  = render partial: 'form', locals: {record: @record}
+
+  .form-group
+    = submit_tag 'Update', class: 'btn btn-primary'

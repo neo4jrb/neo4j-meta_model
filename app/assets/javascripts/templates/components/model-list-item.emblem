@@ -1,0 +1,6 @@
+a.list-group-item click="clicked"
+  = model.class_name
+  = model.level
+
+model-list node=sub_hierarchy
+

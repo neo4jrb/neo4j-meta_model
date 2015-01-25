@@ -1,0 +1,12 @@
+
+table
+  - @has_associations.each do |has_association|
+    tr
+      td = link_to 'Edit', action: :edit, id: has_association.id
+      td = has_association.from_node.class_name
+      td -
+      td = has_association.relationship_type
+      td = has_association.join_type
+      td ->
+      td = has_association.to_node.class_name
+

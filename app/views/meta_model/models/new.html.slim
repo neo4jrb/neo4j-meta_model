@@ -1,0 +1,7 @@
+
+= form_tag({action: :create}, method: 'post', class: 'form-horizontal', role: 'form') do
+  = render partial: 'form', locals: {record: @record}
+
+  .form-group
+    = submit_tag 'Create', class: 'btn btn-primary'
+

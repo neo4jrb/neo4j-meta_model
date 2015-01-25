@@ -1,0 +1,6 @@
+h2 Models
+
+div.list-group
+  - hierarchical_render(@hierarchy) do |model, level|
+    = link_to ('&nbsp;&nbsp;&nbsp;' * level).html_safe + model.class_name, models_path(model: model), class: 'list-group-item'
+

@@ -1,0 +1,22 @@
+- record.attributes.each do |key, value|
+  .form-group
+    label.control-label.col-sm-2 = key.humanize
+    .col-sm-10 = text_field_tag "data[#{key}]", value, class: 'form-control'
+
+- record.class.associations.each do |key, association|
+  .form-group
+    label.control-label.col-sm-2 = key.to_s.humanize
+    .col-sm-10
+      - case association.type
+      - when :has_one
+        = select_tag "data[#{key}]", options_from_collection_for_select(association.target_class.all.to_a, :id, :naming_column_value, record.send(key).id), class: 'form-control'
+      - when :has_many
+        = select_tag "#{key}_chooser", options_from_collection_for_select(association.target_class.all.to_a, :id, :naming_column_value), include_blank: 'Choose a model to add', class: 'has-many-chooser form-control'
+        = render partial: 'meta_model/models/has_many_association', locals: {record: record, key: key, association: association}
+
+
+
+coffee:
+
+  $('.has-many-chooser').change (event) ->
+    console.log {event}

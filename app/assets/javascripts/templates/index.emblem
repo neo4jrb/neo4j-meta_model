@@ -1,0 +1,6 @@
+
+ul.list-group
+  li.list-group-item
+    = link-to 'Models' 'models.hierarchy'
+  li.list-group-item
+    = link-to 'Associations' 'has_associations.index'

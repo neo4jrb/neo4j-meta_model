@@ -1,0 +1,18 @@
+ol.breadcrumb
+  li = link_to 'Models', root_path
+  li = link_to @meta_model.class_name.pluralize, models_path(model: @meta_model.class_name)
+  li = @record._description
+
+= render partial: 'record_details', locals: {record: @record}
+
+- @model.associations.each do |name, association|
+  - logger.warn "@record: #{@record.inspect}"
+  - logger.warn "name: #{name.inspect}"
+  - result = @record.send(name)
+  - result = result.respond_to?(:each) ? result.to_a : (result ? [result] : [])
+  - if result.present?
+    h2 = name.to_s.humanize
+    div
+      - result.each do |sub_record|
+        = render partial: 'record_details', locals: {record: sub_record, link: true}
+

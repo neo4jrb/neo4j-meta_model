@@ -1,0 +1,50 @@
+
+form.form-horizontal
+  .form-group
+    label
+      .col-sm-2.control-label Join Type
+      .col-sm-10
+        view "select" content=model.join_types selectionBinding="model.has_association.join_type" class="form-control"
+
+  .form-group
+    label
+      .col-sm-2.control-label Source Model
+      .col-sm-10
+        view "select" content=model.models optionValuePath="content.id" optionLabelPath="content.class_name" selectionBinding="model.has_association.from_model" class="form-control"
+
+  .form-group
+    label
+      .col-sm-2.control-label Destination Model
+      .col-sm-10
+        view "select" content=model.models optionValuePath="content.id" optionLabelPath="content.class_name" selectionBinding="model.has_association.to_model" class="form-control"
+
+  .form-group
+    label
+      .col-sm-2.control-label
+        | Name
+        if model.has_association.source_is_defined
+          span.help-block #{model.has_association.from_model.class_name} has #{model.has_association.source_join_type}...
+      .col-sm-10
+        = input class="form-control" valueBinding="model.has_association.name"
+
+  .form-group
+    label
+      .col-sm-2.control-label
+        | Opposite Name
+        if model.has_association.destination_is_defined
+          span.help-block #{model.has_association.to_model.class_name} has #{model.has_association.destination_join_type}...
+      .col-sm-10
+        = input class="form-control" valueBinding="model.has_association.opposite_name"
+
+  .form-group
+    label
+      .col-sm-2.control-label
+        | Relationship Type
+        if model.has_association.models_are_defined
+          span.help-block #{model.has_association.from_model.class_name} ... #{model.has_association.to_model.class_name}
+      .col-sm-10
+        = input class="form-control" valueBinding="model.has_association.relationship_type"
+
+.form-group
+  button.btn.btn-primary click="create model.has_association" Create Association
+

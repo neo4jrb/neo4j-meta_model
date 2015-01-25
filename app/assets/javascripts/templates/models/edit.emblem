@@ -1,0 +1,40 @@
+
+.form-group
+  label
+    .col-sm-2.control-label Class Name
+    .col-sm-10
+      = input class="form-control" valueBinding="model.model.class_name"
+
+.form-group
+  label
+    .col-sm-2.control-label Inherits from
+    .col-sm-10
+      view "select" content=models optionValuePath="content.id" optionLabelPath="content.class_name" selectionBinding="model.model.superclass_model" class="form-control"
+
+.properties.row
+  h2
+    | Properties 
+    a.add.btn.btn-default click="add_property model.model" Add Property
+
+  each property in model.model.properties
+    .well.property.col-sm-6 class=property.isDirty:has-warning:
+      i.glyphicon.glyphicon-remove-circle.close.pull-right click="delete_property property"
+
+      .form-group
+        label
+          .col-sm-2.control-label Name
+          .col-sm-10
+            = focus-input valueBinding="property.name" class="form-control"
+
+      .form-group
+        label
+          .col-sm-2.control-label Type
+          .col-sm-10
+            view "select" content=property_types valueBinding="property.type" class="form-control"
+
+.form-group
+  button.btn.btn-danger.pull-right click="delete model.model" DELETE!
+
+.form-group
+  button.btn.btn-primary click="save model.model" Update
+

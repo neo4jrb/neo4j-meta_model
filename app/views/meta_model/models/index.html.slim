@@ -1,0 +1,14 @@
+ol.breadcrumb
+  li = link_to 'Models', root_path
+  li = @meta_model.class_name.pluralize
+
+h2 = @meta_model.class_name.pluralize
+
+= link_to 'Add', new_model_path(model: @meta_model)
+
+div.list-group
+  - @records.each do |record|
+    = link_to model_path(id: record), class: 'list-group-item' do
+      - if record.class != @model
+        span.badge = record.class.to_s
+      = record._description
