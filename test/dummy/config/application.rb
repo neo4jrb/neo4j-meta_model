@@ -3,7 +3,7 @@ require File.expand_path('../boot', __FILE__)
 require 'rails/all'
 
 Bundler.require(*Rails.groups)
-require "meta_model"
+require "neo4j/meta_model"
 
 module MetaModel
   class Application < Rails::Application
