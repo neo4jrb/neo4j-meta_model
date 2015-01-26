@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    meta_model (0.0.1)
+    neo4j-meta_model (0.0.1)
       active_model_serializers (= 0.9.1)
       ember-rails (~> 0.15.0)
       ember-source (~> 1.8.1)
@@ -197,4 +197,4 @@ PLATFORMS
 
 DEPENDENCIES
   byebug
-  meta_model!
+  neo4j-meta_model!
