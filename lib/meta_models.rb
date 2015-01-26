@@ -1,9 +1,9 @@
 require 'ext/hash.rb'
 
 def create_models
-  models = MetaModel::Model.hierarchically.to_a_recursive.flatten
+  models = Neo4j::MetaModel::Model.hierarchically.to_a_recursive.flatten
 
-  MetaModel::ModelBase::LOADED_CLASSES.each do |loaded_class|
+  Neo4j::MetaModel::ModelBase::LOADED_CLASSES.each do |loaded_class|
     loaded_namespace, loaded_class = loaded_class.name.to_s.reverse.split('::', 2).reverse.map(&:reverse)
 
     namespace = loaded_namespace.blank? ? Object : loaded_namespace.constantize
@@ -11,12 +11,13 @@ def create_models
     namespace.send(:remove_const, loaded_class.to_sym)
   end
 
-  MetaModel::ModelBase::LOADED_CLASSES.clear
+  Neo4j::MetaModel::ModelBase::LOADED_CLASSES.clear
 
   models.each do |model|
-    code = "module MetaModel\n"
+    code = "module Neo4j\n"
+    code << "module MetaModel\n"
     code << "class #{model.class_name}"
-    code << " < MetaModel::#{model.superclass_model.class_name}" if model.superclass_model
+    code << " < Neo4j::MetaModel::#{model.superclass_model.class_name}" if model.superclass_model
     code << "\n"
 
     code << "  include Neo4j::ActiveNode\n"
@@ -31,7 +32,7 @@ def create_models
     model.assocs.each_with_rel do |other_model, rel|
       # Primary association
       if rel.from_node.class_name == model.class_name
-        options = {type: rel.relationship_type, model_class: 'MetaModel::' + other_model.class_name}
+        options = {type: rel.relationship_type, model_class: 'Neo4j::MetaModel::' + other_model.class_name}
 
         has_type = case rel.join_type
                     when 'many_to_many', 'many_to_one'
@@ -45,7 +46,7 @@ def create_models
 
       # Reverse association
       if rel.to_node.class_name == model.class_name
-        options = {model_class: 'MetaModel::' + other_model.class_name, origin: rel.name}
+        options = {model_class: 'Neo4j::MetaModel::' + other_model.class_name, origin: rel.name}
 
         has_type = case rel.join_type
                     when 'many_to_many', 'one_to_many'
@@ -59,6 +60,7 @@ def create_models
 
     end
 
+    code << "end\n"
     code << "end\n"
     code << "end"
 

@@ -1,4 +1,4 @@
-MetaModel::Engine.routes.draw do
+Neo4j::MetaModel::Engine.routes.draw do
   namespace :meta do
     resources :models do
       collection do

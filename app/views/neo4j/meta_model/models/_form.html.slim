@@ -1,0 +1,80 @@
+- record.attributes.each do |key, value|
+  .form-group
+    label.control-label.col-sm-2 = key.humanize
+    .col-sm-10 = text_field_tag "data[#{key}]", value, class: 'form-control'
+
+- record.class.associations.each do |key, association|
+  .form-group
+    label.control-label.col-sm-2 = key.to_s.humanize
+    .col-sm-10
+      - case association.type
+      - when :has_one
+        = select_tag "data[#{key}]", options_from_collection_for_select(association.target_class.all.to_a, :id, :naming_column_value, record.send(key).try(:id)), include_blank: 'Select one from the options below', class: 'form-control'
+      - when :has_many
+        .has-many-association data-option-type="#{association.target_class.meta_model_class.tableize.singularize}" data-options="#{association.target_class.all.to_json(methods: :naming_column_value)}"
+          select.form-control rv-on-change="view.add"
+            option Select from the options below to add to the list
+            option rv-each-option="view.current_options < objects" rv-value="option.id"
+              | { option.naming_column_value }
+
+          .help-block Click to remove an item from the list
+
+          .list-group data-object-ids="#{record.send(key).map(&:id).to_json}"
+            a.list-group-item rv-each-object="objects < objects" rv-data-id="object.id" rv-on-click="view.delete"
+              input type="hidden" name="data[#{key}][]" rv-value="object.id"
+              | { object.naming_column_value }
+
+
+
+coffee:
+ 
+  class HasManyAssociationView extends Backbone.View
+    el: '.has-many-association'
+
+    initialize: ->
+      el = $(@el)
+
+      @objects = []
+      object_ids = el.find('.list-group').data('object-ids')
+
+      @options = _(el.data('options')).map((element) =>
+        e = element[el.data('option-type')]
+
+        if e.id in object_ids
+          @objects.push e
+
+        e
+      ).value()
+
+    render: ->
+      @binding = rivets.bind $(@el), {@objects, view: @}
+
+      @
+
+    remove: ->
+      @binding.unbind()
+
+    current_options: =>
+      _(@options).difference(@objects).value()
+
+
+    add: (event, object) =>
+      selected_id = $(event.target).val()
+      selected_option = _(@options).find((option) -> option.id is selected_id)
+
+      @objects.push selected_option
+
+      $(@el).find('select option').removeAttr('selected')
+
+    delete: (event, object) =>
+      selected_id = $(event.target).data('id')
+      selected_object = _(@options).find((option) -> option.id is selected_id)
+
+      index = _(@objects).indexOf(selected_object)
+      @objects.removeAt(index)
+
+  ready = ->
+    new HasManyAssociationView().render()
+
+  $('document').ready ready
+  $('document').on 'page:load', ready

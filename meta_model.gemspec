@@ -1,12 +1,12 @@
 $:.push File.expand_path("../lib", __FILE__)
 
 # Maintain your gem's version:
-require "meta_model/version"
+require "neo4j/meta_model/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = "neo4j-meta_model"
-  s.version     = MetaModel::VERSION
+  s.version     = Neo4j::MetaModel::VERSION
   s.authors     = ["Brian Underwood"]
   s.email       = ["public@brian-underwood.codes"]
   s.homepage    = "http://github.com/neo4jrb/neo4j-meta_model"
