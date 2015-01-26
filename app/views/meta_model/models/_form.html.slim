@@ -11,12 +11,62 @@
       - when :has_one
         = select_tag "data[#{key}]", options_from_collection_for_select(association.target_class.all.to_a, :id, :naming_column_value, record.send(key).id), class: 'form-control'
       - when :has_many
-        = select_tag "#{key}_chooser", options_from_collection_for_select(association.target_class.all.to_a, :id, :naming_column_value), include_blank: 'Choose a model to add', class: 'has-many-chooser form-control'
-        = render partial: 'meta_model/models/has_many_association', locals: {record: record, key: key, association: association}
+        .has-many-association data-option-type="#{association.target_class.meta_model_class.tableize.singularize}" data-options="#{association.target_class.all.to_json(methods: :naming_column_value)}"
+          select.form-control rv-on-change="view.add"
+            option Please select
+            option rv-each-option="view.current_options < objects" rv-value="option.id"
+              | { option.naming_column_value }
+
+          .list-group
+            a.list-group-item rv-each-object="objects < objects" rv-data-id="object.id" rv-on-click="view.delete"
+              input type="hidden" name="data[#{key}][]" rv-value="object.id"
+              | { object.naming_column_value }
 
 
 
 coffee:
+ 
+  class HasManyAssociationView extends Backbone.View
+    el: '.has-many-association'
 
-  $('.has-many-chooser').change (event) ->
-    console.log {event}
+    initialize: ->
+      el = $(@el)
+      @options = _(el.data('options')).map((element) ->
+        element[el.data('option-type')]
+      ).value()
+
+      @objects = [@options[0]]
+
+    render: ->
+      @binding = rivets.bind $(@el), {@objects, view: @}
+
+      @
+
+    remove: ->
+      @binding.unbind()
+
+    current_options: =>
+      console.log('current_options!');
+      _(@options).difference(@objects).value()
+
+
+    add: (event, object) =>
+      selected_id = $(event.target).val()
+      selected_option = _(@options).find((option) -> option.id is selected_id)
+
+      @objects.push selected_option
+
+      $(@el).find('select option').removeAttr('selected')
+
+    delete: (event, object) =>
+      selected_id = $(event.target).data('id')
+      selected_object = _(@options).find((option) -> option.id is selected_id)
+
+      index = _(@objects).indexOf(selected_object)
+      @objects.removeAt(index)
+
+  ready = ->
+    new HasManyAssociationView().render()
+
+  $('document').ready ready
+  $('document').on 'page:load', ready

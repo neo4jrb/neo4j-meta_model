@@ -5,11 +5,11 @@ require "meta_model/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "meta_model"
+  s.name        = "neo4j-meta_model"
   s.version     = MetaModel::VERSION
   s.authors     = ["Brian Underwood"]
   s.email       = ["public@brian-underwood.codes"]
-  s.homepage    = "http://github.com/neo4jrb/meta_model"
+  s.homepage    = "http://github.com/neo4jrb/neo4j-meta_model"
   s.summary     = "A Rails Engine to administer Neo4j models"
   s.description = "A Rails Engine to administer Neo4j models"
   s.license     = "MIT"

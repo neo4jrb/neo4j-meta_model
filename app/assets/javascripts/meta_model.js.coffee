@@ -5,6 +5,13 @@
 #= require ember
 #= require ember-data
 
+
+#= require sightglass
+#= require rivets
+#= require backbone
+#= require rivets-backbone
+
+
 #= require ./store
 #= require_tree ./models
 #= require_tree ./controllers
@@ -28,7 +35,7 @@ mm_path = (path) ->
 
 
 # for more details see: http://emberjs.com/guides/application/
-window.MetaModel = Ember.Application.create(rootElement: '#ember-application')
+#window.MetaModel = Ember.Application.create(rootElement: '#ember-application')
 
 MetaModel.ApplicationController = Ember.Controller.extend()
 

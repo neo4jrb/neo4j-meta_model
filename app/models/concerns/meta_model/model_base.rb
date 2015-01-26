@@ -37,7 +37,7 @@ module MetaModel
     end
 
     def _description
-      self.try(:name) || self.try(:description) || self.id
+      self.try(:name) || self.try(:name) || self.try(:description) || self.id
     end
   end
 end
