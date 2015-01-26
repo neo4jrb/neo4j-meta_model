@@ -1,3 +1,20 @@
-= MetaModel
+= Neo4j MetaModel
+
+== Usage
+
+`Gemfile`
+
+    gem 'neo4j-meta_model', require: 'neo4j/meta_model'
+
+In your environment (`config/application.rb` or `config/environments/development.rb` for example)
+
+    config.neo4j.session_type = :server_db 
+    config.neo4j.session_path = 'http://localhost:7474'
+
+`config/routes.rb`
+
+    mount Neo4j::MetaModel::Engine => "/mount/path"
+
+  
 
 This project rocks and uses MIT-LICENSE.
