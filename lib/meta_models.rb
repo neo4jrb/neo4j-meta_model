@@ -25,8 +25,13 @@ def create_models
 
     code << "  self.mapped_label_name = '#{model.class_name}'\n"
 
+    
     model.properties.each do |property|
-      code << "  property :#{property.name}, type: #{property.type}\n"
+      if model.id_property == property
+        code << "  id_property :#{property.name}\n"
+      else
+        code << "  property :#{property.name}, type: #{property.type}\n"
+      end
     end
 
     model.assocs.each_with_rel do |other_model, rel|

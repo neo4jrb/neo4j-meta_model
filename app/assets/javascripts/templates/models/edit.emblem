@@ -16,6 +16,12 @@
     | Properties 
     a.add.btn.btn-default click="add_property model.model" Add Property
 
+  .form-group
+    label
+      .col-sm-2.control-label ID Property
+      .col-sm-10
+        view "select" content=model.model.properties selectionBinding="model.model.id_property" optionValuePath="content.id" optionLabelPath="content.name" prompt="Please Select" class="form-control"
+
   each property in model.model.properties
     .well.property.col-sm-6 class=property.isDirty:has-warning:
       i.glyphicon.glyphicon-remove-circle.close.pull-right click="delete_property property"

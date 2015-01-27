@@ -73,7 +73,8 @@ module Neo4j
 
         def model_params
           superclass_model = params[:model].delete(:superclass_model_id)
-          params.require(:model).permit(:class_name, :superclass_model).merge(superclass_model: superclass_model)
+          id_property = params[:model].delete(:id_property_id)
+          params.require(:model).permit(:class_name, :superclass_model).merge(superclass_model: superclass_model, id_property: id_property)
         end
       end
     end
