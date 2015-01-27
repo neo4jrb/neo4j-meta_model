@@ -137,7 +137,7 @@ ready = ->
 
 
       standardize_relationship_type: (->
-        @set 'relationship_type', @get('relationship_type').replace(/[^a-z0-9]+/g, '_')
+        @set 'relationship_type', @get('relationship_type').replace(/[^a-zA-Z0-9]+/g, '_')
       ).observes('relationship_type')
 
 
