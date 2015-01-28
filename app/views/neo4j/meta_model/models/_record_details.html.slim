@@ -1,10 +1,10 @@
 - link ||= false
 
-= link_to 'View', {action: :show, model: record.meta_model_class.to_s.tableize, id: record.id}, class: 'btn btn-default' if link
+= link_to 'View', {controller: :models, action: :show, model: record.meta_model_class.to_s.tableize, id: record.id}, class: 'btn btn-default' if link
 
-= link_to 'Edit', {action: :edit, model: record.meta_model_class.to_s.tableize, id: record.id}, class: 'btn btn-default'
+= link_to 'Edit', {controller: :models, action: :edit, model: record.meta_model_class.to_s.tableize, id: record.id}, class: 'btn btn-default'
 
-= button_to 'Delete', {action: :destroy, model: record.meta_model_class.to_s.tableize, id: record.id}, method: :delete, class: 'btn btn-danger pull-right'
+= button_to 'Delete', {controller: :models, action: :destroy, model: record.meta_model_class.to_s.tableize, id: record.id}, method: :delete, class: 'btn btn-danger pull-right'
 
 dl.dl-horizontal
   - record.attributes.each do |key, value|
