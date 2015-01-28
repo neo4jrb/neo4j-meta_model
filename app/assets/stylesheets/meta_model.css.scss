@@ -4,6 +4,14 @@
  *= require_self
  */
 
+@font-face {
+  font-family: 'Icomoon';
+  src: font-url("/assets/icomoon.eot");
+  src: font-url("/assets/icomoon.eot?#iefix") format("embedded-opentype"), font-url("/assets/icomoon.svg#icomoon") format("svg"), font-url("/assets/icomoon.woff") format("woff"), font-url("/assets/icomoon.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 #accordion .glyphicon { margin-right:10px; }
  
 #model-list {
