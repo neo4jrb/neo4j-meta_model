@@ -4,13 +4,18 @@
  *= require_self
  */
 
-@font-face {
-  font-family: 'Icomoon';
-  src: font-url("/assets/icomoon.eot");
-  src: font-url("/assets/icomoon.eot?#iefix") format("embedded-opentype"), font-url("/assets/icomoon.svg#icomoon") format("svg"), font-url("/assets/icomoon.woff") format("woff"), font-url("/assets/icomoon.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
+/* Gotten from: https://github.com/twbs/bootstrap-sass/blob/7d30630bc8d490239b15dce754dfba298a7d5bc2/assets/stylesheets/_bootstrap-sprockets.scss */
+@function twbs-font-path($path) {
+  @return font-path($path);
 }
+
+@function twbs-image-path($path) {
+  @return image-path($path);
+}
+
+$bootstrap-sass-asset-helper: true;
+/* end */
+
 
 #accordion .glyphicon { margin-right:10px; }
  
