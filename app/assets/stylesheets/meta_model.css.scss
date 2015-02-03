@@ -123,4 +123,15 @@ $relationship-arrow-length: 60px;
     position: absolute;
     transform: translate(5px,14px);
   }
+
+  .glyphicon-triangle-right {
+    top: -1px;
+    left: -5px;
+
+    &:before {
+      content: '>';
+      font-weight: bold;
+      font-size: 1.4em;
+    }
+  }
 }
