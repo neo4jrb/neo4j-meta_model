@@ -1,0 +1,22 @@
+
+.row.has-associations-row
+  = has_association.from_model.class_name
+  .relationship
+    span.source-join-type
+      = has_association.source_join_type
+    span.source-association-name
+      = has_association.name
+
+    | :
+
+    = has_association.relationship_type
+    span.destination-join-type
+      = has_association.destination_join_type
+    span.destination-association-name
+      = has_association.opposite_name
+
+  i.glyphicon.glyphicon-triangle-right
+  = has_association.to_model.class_name
+
+  = yield
+

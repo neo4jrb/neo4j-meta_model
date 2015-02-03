@@ -136,6 +136,17 @@ ready = ->
       ).property('from_model', 'to_model')
 
 
+      standardize_name: (->
+        @set 'name', @standardized_name @get('name')
+      ).observes('name')
+
+      standardize_opposite_name: (->
+        @set 'opposite_name', @standardized_name @get('opposite_name')
+      ).observes('opposite_name')
+
+      standardized_name: (name) ->
+        name.replace(/^[\s0-9]/, '').replace(/[^a-zA-Z0-9]+/g, '_').toLowerCase()
+
       standardize_relationship_type: (->
         @set 'relationship_type', @get('relationship_type').replace(/[^a-zA-Z0-9]+/g, '_')
       ).observes('relationship_type')
@@ -205,7 +216,6 @@ ready = ->
 
       actions:
         create: (has_association) ->
-          console.log 'create!'
           has_association.save().then (record) =>
            @transitionToRoute 'has_associations.index'
 

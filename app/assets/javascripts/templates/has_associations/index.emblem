@@ -1,25 +1,7 @@
-link-to "has_associations.new" | New Association
+.row
+  link-to "has_associations.new" class="btn btn-primary" | New Association
 
-table#has-associations-table.table.table-striped.table-bordered
+.has-association-list
   each has_association in model
-    tr
-      td
-        = has_association.from_model.class_name
-        .relationship
-          span.source-join-type
-            = has_association.source_join_type
-          span.source-association-name
-            = has_association.name
-
-          | :
-
-          = has_association.relationship_type
-          span.destination-join-type
-            = has_association.destination_join_type
-          span.destination-association-name
-            = has_association.opposite_name
-
-        i.glyphicon.glyphicon-triangle-right
-        = has_association.to_model.class_name
-      td
-        a.btn.btn-danger click="delete has_association" DELETE
+    has-association-diagram has_association=has_association
+      a.btn.btn-danger.pull-right click="delete has_association" DELETE

@@ -74,7 +74,11 @@ label {
 
 $relationship-arrow-length: 60px;
 
-#has-associations-table {
+.has-association-list .has-associations-row {
+  margin: 3em 0;
+}
+
+.has-associations-row {
   td {
     line-height: 4em;
   }
