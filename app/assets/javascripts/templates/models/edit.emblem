@@ -26,17 +26,15 @@
     .well.property.col-sm-6 class=property.isDirty:has-warning:
       i.glyphicon.glyphicon-remove-circle.close.pull-right click="delete_property property"
 
-      .form-group
-        label
-          .col-sm-2.control-label Name
-          .col-sm-10
-            = focus-input valueBinding="property.name" class="form-control"
+      label
+        .col-sm-2.control-label Name
+        .col-sm-10
+          = focus-input valueBinding="property.name" class="form-control"
 
-      .form-group
-        label
-          .col-sm-2.control-label Type
-          .col-sm-10
-            view "select" content=property_types valueBinding="property.type" class="form-control"
+      label
+        .col-sm-2.control-label Type
+        .col-sm-10
+          view "select" content=property_types valueBinding="property.type" class="form-control"
 
 .form-group
   button.btn.btn-danger.pull-right click="delete model.model" DELETE!
