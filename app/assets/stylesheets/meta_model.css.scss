@@ -72,6 +72,14 @@ label {
   }
 }
 
+.add-model-btn {
+  font-size: 2em;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  line-height: 1em;
+}
+
 $relationship-arrow-length: 60px;
 
 .has-association-list .has-associations-row {
