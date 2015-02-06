@@ -6,8 +6,7 @@
 .row
   div.col-sm-11
     = input valueBinding="new_model_name" class="form-control" placeholder="Model Name" class="form-control"
-  a.btn.add-model-btn.col-sm-1 click='add add_model_name'
-    | +
+  a.btn.btn-default.add-model-btn.col-sm-1 click="add_model add_model_name" +
 
 
 model-list node=model class="nested-list-group" id="model-list"

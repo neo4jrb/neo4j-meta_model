@@ -168,9 +168,10 @@ ready = ->
       new_model_name: ''
 
       actions:
-        add: (class_name) ->
-         @store.createRecord('model', class_name: @new_model_name).save().then (record) =>
-           @transitionToRoute 'models.edit', queryParams: class_name: record.class_name
+        add_model: (class_name) ->
+          @store.createRecord('model', class_name: @new_model_name).save().then (record) =>
+            console.log {queryParams: class_name: record.get('class_name')}
+            @transitionToRoute 'models.edit', record.get('class_name')
 
 
     MetaModel.ModelsEditRoute = Ember.Route.extend
