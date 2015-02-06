@@ -6,6 +6,8 @@ module Neo4j
 
       validates_inclusion_of :type, :in => %w( String DateTime Boolean Integer )
 
+      validates :name, presence: true
+
       has_one :in, :model, origin: :properties, model_class: 'Neo4j::MetaModel::Model'
 
     end

@@ -9,7 +9,7 @@
   label
     .col-sm-2.control-label Inherits from
     .col-sm-10
-      view "select" content=models optionValuePath="content.id" optionLabelPath="content.class_name" selectionBinding="model.model.superclass_model" class="form-control"
+      view "select" content=model.models optionValuePath="content.id" optionLabelPath="content.class_name" selectionBinding="model.model.superclass_model" class="form-control"
 
 .properties.row
   h2
@@ -20,7 +20,7 @@
     label
       .col-sm-2.control-label ID Property
       .col-sm-10
-        view "select" content=model.model.properties selectionBinding="model.model.id_property" optionValuePath="content.id" optionLabelPath="content.name" prompt="Please Select" class="form-control"
+        view "select" content=model.model.properties selectionBinding="model.model.id_property" optionValuePath="content.id" optionLabelPath="content.name" prompt="Auto" class="form-control"
 
   each property in model.model.properties
     .well.property.col-sm-6 class=property.isDirty:has-warning:

@@ -218,7 +218,7 @@ ready = ->
       actions:
         create: (has_association) ->
           has_association.save().then (record) =>
-           @transitionToRoute 'has_associations.index'
+           @transitionTo 'has_associations.index'
 
 
 $(document).ready ready

@@ -7,17 +7,23 @@ module Neo4j
         def destroy
           @property.destroy
 
+          create_models
+
           render json: nil
         end
 
         def create
           property = Property.create(property_params)
 
+          create_models
+
           render json: property
         end
 
         def update
           @property.update_attributes(property_params)
+
+          create_models
 
           render json: @property
         end
