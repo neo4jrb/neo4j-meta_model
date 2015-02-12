@@ -19,7 +19,9 @@ module Neo4j
 
         def naming_column
           # Probably want to allow the user to choose this
-          Neo4j::MetaModel::Model.where(class_name: meta_model_class).first.properties.detect {|p| p.type == 'String' }.name
+          column = (['name', 'title', 'description'] & attributes.keys).first
+
+          column || Neo4j::MetaModel::Model.where(class_name: meta_model_class).first.properties.detect {|p| p.type == 'String' }.name
         end
       end
 
@@ -38,7 +40,7 @@ module Neo4j
       end
 
       def _description
-        self.try(:name) || self.try(:title) || self.try(:description) || self.id
+        self.send(self.class.naming_column)
       end
     end
   end
