@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'neo4j', '~> 4.1.0'
   s.add_dependency 'ember-rails', '~> 0.15.0'
   s.add_dependency 'ember-source', '~> 1.8.1'
-  s.add_dependency 'emblem-rails', '~> 0.2.1'
+  s.add_dependency 'emblem-rails', '~> 0.2.2'
   s.add_dependency 'slim-rails'
   s.add_dependency 'active_model_serializers', '0.9.1'
 end
