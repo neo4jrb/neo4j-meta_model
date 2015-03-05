@@ -1,9 +1,9 @@
 PATH
   remote: .
   specs:
-    neo4j-meta_model (0.3.4)
+    neo4j-meta_model (0.3.5)
       active_model_serializers (= 0.9.1)
-      ember-rails (~> 0.16.1)
+      ember-rails (~> 0.16.4)
       ember-source (~> 1.8.1)
       emblem-rails (~> 0.2.2)
       neo4j (~> 4.1.0)
