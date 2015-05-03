@@ -1,0 +1,4 @@
+div.list-group
+  each child in node
+    /model-list-item model=child.[0] sub_hierarchy=child.[1]
+

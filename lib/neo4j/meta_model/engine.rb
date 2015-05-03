@@ -1,7 +1,5 @@
 require 'active_model_serializers'
 require 'slim-rails'
-require 'ember-rails'
-require 'emblem/rails'
 
 # TODO: Isolate?
 ActiveModel::Serializer.setup do |config|
@@ -15,10 +13,13 @@ module Neo4j
       isolate_namespace MetaModel
 
       initializer :assets do |config|
-        Rails.application.config.assets.precompile += %w( admin/models.js meta_model.js
+        Rails.application.config.assets.precompile += %w( meta_model.js meta_model/app.js meta_model/vendor.js
                                                           meta_model.css )
 
-        Rails.application.config.assets.paths << "#{Rails.root}/vendor/assets/fonts"
+        Rails.application.config.assets.paths << "#{Rails.root}/vendor/assets/fonts #{Rails.root}/public/meta_model/assets"
+      end
+      initializer "static assets" do |app|
+        app.middleware.use ::ActionDispatch::Static, "#{root}/public"
       end
     end
   end

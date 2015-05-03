@@ -1,0 +1,12 @@
+.well.well-sm
+  p Here you can create new models and edit existing models.
+  p To create a model, enter the model name in the box below and click the button
+  p To edit a model, simply click on a model from the list
+
+.row
+  div.col-sm-11
+    = input value=new_model_name class="form-control" placeholder="Model Name"
+  a.btn.btn-default.add-model-btn.col-sm-1 click="add_model" +
+
+
+model-list node=model class="nested-list-group" id="model-list"

@@ -8,7 +8,7 @@ module Neo4j
       has_many :properties
       has_many :has_associations
       has_one :id_property, serializer: PropertySerializer, root: 'properties'
-    #  has_one :superclass_model
+      has_one :superclass_model
     end
   end
 end
