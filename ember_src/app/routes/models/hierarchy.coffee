@@ -2,7 +2,7 @@
 
 ModelsHierarchyRoute = Ember.Route.extend
   model: ->
-    Ember.$.getJSON(mm_path '/meta/models/hierarchy.json').then (data) ->
+    $.getJSON(mm_path '/meta/models/hierarchy.json').then (data) ->
       data.models
   actions:
     goto_metamodel: (model) ->

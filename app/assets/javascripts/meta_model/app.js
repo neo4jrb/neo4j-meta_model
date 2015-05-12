@@ -92,7 +92,8 @@ define('ember-src/app', ['exports', 'ember', 'ember/resolver', 'ember/load-initi
   MetaModelApp = Ember['default'].Application.extend({
     modulePrefix: config['default'].modulePrefix,
     podModulePrefix: config['default'].podModulePrefix,
-    Resolver: Resolver['default']
+    Resolver: Resolver['default'],
+    rootElement: "#ember-application"
   });
 
   loadInitializers['default'](MetaModelApp, config['default'].modulePrefix);
@@ -163,35 +164,6 @@ define('ember-src/controllers/application', ['exports', 'ember'], function (expo
 	ApplicationController = Ember['default'].Controller.extend();
 
 	exports['default'] = ApplicationController;
-
-});
-define('ember-src/controllers/models-hierarchy', ['exports', 'ember'], function (exports, Ember) {
-
-  'use strict';
-
-  var ModelsHierarchyController;
-
-  ModelsHierarchyController = Ember['default'].Controller.extend({
-    new_model_name: '',
-    actions: {
-      add_model: function() {
-        return this.store.createRecord('model', {
-          class_name: this.new_model_name
-        }).save().then((function(_this) {
-          return function(record) {
-            console.log({
-              queryParams: {
-                class_name: record.get('class_name')
-              }
-            });
-            return _this.transitionToRoute('models.edit', record.get('class_name'));
-          };
-        })(this));
-      }
-    }
-  });
-
-  exports['default'] = ModelsHierarchyController;
 
 });
 define('ember-src/controllers/models/hierarchy', ['exports', 'ember'], function (exports, Ember) {
@@ -428,7 +400,27 @@ define('ember-src/router', ['exports', 'ember', 'ember-src/config/environment'],
   exports['default'] = Router.map(map_fn);;
 
 });
-define('ember-src/routes/has-associations-new', ['exports', 'ember'], function (exports, Ember) {
+define('ember-src/routes/has-associations/index', ['exports', 'ember'], function (exports, Ember) {
+
+  'use strict';
+
+  var HasAssociationsIndexRoute;
+
+  HasAssociationsIndexRoute = Ember['default'].Route.extend({
+    model: function(params) {
+      return this.store.find('has_association');
+    },
+    actions: {
+      "delete": function(has_association) {
+        return has_association.destroyRecord();
+      }
+    }
+  });
+
+  exports['default'] = HasAssociationIndexRoute;
+
+});
+define('ember-src/routes/has-associations/new', ['exports', 'ember'], function (exports, Ember) {
 
   'use strict';
 
@@ -456,7 +448,7 @@ define('ember-src/routes/has-associations-new', ['exports', 'ember'], function (
   exports['default'] = HasAssociationsNewRoute;
 
 });
-define('ember-src/routes/models-edit', ['exports', 'ember'], function (exports, Ember) {
+define('ember-src/routes/models/edit', ['exports', 'ember'], function (exports, Ember) {
 
   'use strict';
 
@@ -504,7 +496,7 @@ define('ember-src/routes/models-edit', ['exports', 'ember'], function (exports, 
   exports['default'] = ModelsEditRoute;
 
 });
-define('ember-src/routes/models-hierarchy', ['exports', 'ember'], function (exports, Ember) {
+define('ember-src/routes/models/hierarchy', ['exports', 'ember'], function (exports, Ember) {
 
   'use strict';
 
@@ -512,7 +504,7 @@ define('ember-src/routes/models-hierarchy', ['exports', 'ember'], function (expo
 
   ModelsHierarchyRoute = Ember['default'].Route.extend({
     model: function() {
-      return Ember['default'].$.getJSON(mm_path('/meta/models/hierarchy.json')).then(function(data) {
+      return $.getJSON(mm_path('/meta/models/hierarchy.json')).then(function(data) {
         return data.models;
       });
     },
@@ -756,10 +748,17 @@ define('ember-src/templates/components/model-list', ['exports'], function (expor
         hasRendered: false,
         build: function build(dom) {
           var el0 = dom.createDocumentFragment();
+          var el1 = dom.createTextNode("    ");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createComment("");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
           return el0;
         },
         render: function render(context, env, contextualElement) {
           var dom = env.dom;
+          var hooks = env.hooks, get = hooks.get, inline = hooks.inline;
           dom.detectNamespace(contextualElement);
           var fragment;
           if (env.useFragmentCache && dom.canClone) {
@@ -777,6 +776,8 @@ define('ember-src/templates/components/model-list', ['exports'], function (expor
           } else {
             fragment = this.build(dom);
           }
+          var morph0 = dom.createMorphAt(fragment,1,1,contextualElement);
+          inline(env, morph0, context, "model-list-item", [], {"model": get(env, context, "child.0"), "sub_hierarchy": get(env, context, "child.1")});
           return fragment;
         }
       };
@@ -791,8 +792,12 @@ define('ember-src/templates/components/model-list', ['exports'], function (expor
         var el0 = dom.createDocumentFragment();
         var el1 = dom.createElement("div");
         dom.setAttribute(el1,"class","list-group");
+        var el2 = dom.createTextNode("\n");
+        dom.appendChild(el1, el2);
         var el2 = dom.createComment("");
         dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
         dom.appendChild(el0, el1);
         return el0;
       },
@@ -816,7 +821,7 @@ define('ember-src/templates/components/model-list', ['exports'], function (expor
         } else {
           fragment = this.build(dom);
         }
-        var morph0 = dom.createMorphAt(dom.childAt(fragment, [0]),0,0);
+        var morph0 = dom.createMorphAt(dom.childAt(fragment, [0]),1,1);
         block(env, morph0, context, "each", [get(env, context, "node")], {"keyword": "child"}, child0, null);
         return fragment;
       }
@@ -2096,13 +2101,13 @@ define('ember-src/tests/unit/serializers/application-test', ['ember-qunit'], fun
 /* jshint ignore:start */
 
 define('ember-src/config/environment', ['ember'], function(Ember) {
-  return { 'default': {"modulePrefix":"ember-src","environment":"development","baseURL":"/","locationType":"auto","EmberENV":{"FEATURES":{}},"APP":{"name":"ember-src","version":"0.0.0.a1e08cd2"},"contentSecurityPolicyHeader":"Content-Security-Policy-Report-Only","contentSecurityPolicy":{"default-src":"'none'","script-src":"'self' 'unsafe-eval'","font-src":"'self'","connect-src":"'self'","img-src":"'self'","style-src":"'self'","media-src":"'self'"},"exportApplicationGlobal":true}};
+  return { 'default': {"modulePrefix":"ember-src","environment":"development","baseURL":"/","locationType":"auto","EmberENV":{"FEATURES":{}},"APP":{"name":"ember-src","version":"0.0.0.cfccf0ee"},"contentSecurityPolicyHeader":"Content-Security-Policy-Report-Only","contentSecurityPolicy":{"default-src":"'none'","script-src":"'self' 'unsafe-eval'","font-src":"'self'","connect-src":"'self'","img-src":"'self'","style-src":"'self'","media-src":"'self'"},"exportApplicationGlobal":true}};
 });
 
 if (runningTests) {
   require("ember-src/tests/test-helper");
 } else {
-  require("ember-src/app")["default"].create({"name":"ember-src","version":"0.0.0.a1e08cd2"});
+  require("ember-src/app")["default"].create({"name":"ember-src","version":"0.0.0.cfccf0ee"});
 }
 
 /* jshint ignore:end */

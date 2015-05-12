@@ -29,6 +29,8 @@ MetaModelApp = Ember.Application.extend
   modulePrefix: config.modulePrefix
   podModulePrefix: config.podModulePrefix
   Resolver: Resolver
+  rootElement: "#ember-application"
+
 
 loadInitializers MetaModelApp, config.modulePrefix
 
