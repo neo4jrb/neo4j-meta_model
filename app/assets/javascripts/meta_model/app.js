@@ -13,13 +13,13 @@ define('ember-src/adapters/application', ['exports', 'ember-data'], function (ex
 	exports['default'] = ApplicationAdapter;
 
 });
-define('ember-src/adapters/association', ['exports', 'ember-src/adapters/meta-model'], function (exports, MetaModelAdapter) {
+define('ember-src/adapters/has-association', ['exports', 'ember-src/adapters/meta-model'], function (exports, MetaModelAdapter) {
 
   'use strict';
 
-  var AssociationAdapter;
+  var HasAssociationAdapter;
 
-  AssociationAdapter = MetaModelAdapter['default'].extend({
+  HasAssociationAdapter = MetaModelAdapter['default'].extend({
     buildURL: function(type, id, record) {
       var result;
       result = "/meta/has_associations";
@@ -30,7 +30,7 @@ define('ember-src/adapters/association', ['exports', 'ember-src/adapters/meta-mo
     }
   });
 
-  exports['default'] = AssociationAdapter;
+  exports['default'] = HasAssociationAdapter;
 
 });
 define('ember-src/adapters/meta-model', ['exports', 'ember-src/adapters/application'], function (exports, ApplicationAdapter) {
@@ -86,6 +86,14 @@ define('ember-src/app', ['exports', 'ember', 'ember/resolver', 'ember/load-initi
     }
     return base_path + '/' + p;
   };
+
+  $(function() {
+    var token;
+    token = $('meta[name="csrf-token"]').attr('content');
+    return $.ajaxPrefilter(function(options, originalOptions, xhr) {
+      return xhr.setRequestHeader('X-CSRF-Token', token);
+    });
+  });
 
   Ember['default'].MODEL_FACTORY_INJECTIONS = true;
 
@@ -417,7 +425,7 @@ define('ember-src/routes/has-associations/index', ['exports', 'ember'], function
     }
   });
 
-  exports['default'] = HasAssociationIndexRoute;
+  exports['default'] = HasAssociationsIndexRoute;
 
 });
 define('ember-src/routes/has-associations/new', ['exports', 'ember'], function (exports, Ember) {
@@ -476,8 +484,11 @@ define('ember-src/routes/models/edit', ['exports', 'ember'], function (exports, 
         return property.destroyRecord();
       },
       save: function(model) {
+        console.log(1);
         model.save();
+        console.log(2);
         return model.get('properties').forEach(function(property) {
+          console.log(3);
           if (property.get('isDirty')) {
             return property.save();
           }
@@ -829,7 +840,7 @@ define('ember-src/templates/components/model-list', ['exports'], function (expor
   }()));
 
 });
-define('ember-src/templates/has_associations/index', ['exports'], function (exports) {
+define('ember-src/templates/has-associations/index', ['exports'], function (exports) {
 
   'use strict';
 
@@ -908,7 +919,7 @@ define('ember-src/templates/has_associations/index', ['exports'], function (expo
               fragment = this.build(dom);
             }
             var element0 = dom.childAt(fragment, [0]);
-            element(env, element0, context, "action", [get(env, context, "delete"), get(env, context, "has_association")], {"on": "click"});
+            element(env, element0, context, "action", ["delete", get(env, context, "has_association")], {"on": "click"});
             return fragment;
           }
         };
@@ -1003,7 +1014,7 @@ define('ember-src/templates/has_associations/index', ['exports'], function (expo
   }()));
 
 });
-define('ember-src/templates/has_associations/new', ['exports'], function (exports) {
+define('ember-src/templates/has-associations/new', ['exports'], function (exports) {
 
   'use strict';
 
@@ -1384,7 +1395,7 @@ define('ember-src/templates/has_associations/new', ['exports'], function (export
         inline(env, morph7, context, "input", [], {"valueBinding": "model.has_association.opposite_name", "class": "form-control"});
         block(env, morph8, context, "if", [get(env, context, "model.has_association.models_are_defined")], {}, child2, null);
         inline(env, morph9, context, "input", [], {"valueBinding": "model.has_association.relationship_type", "class": "form-control"});
-        element(env, element8, context, "action", [get(env, context, "create"), get(env, context, "model.has_association")], {"on": "click"});
+        element(env, element8, context, "action", ["create", get(env, context, "model.has_association")], {"on": "click"});
         return fragment;
       }
     };
@@ -1520,7 +1531,7 @@ define('ember-src/templates/models/edit', ['exports'], function (exports) {
           var morph0 = dom.createMorphAt(dom.childAt(element0, [1, 1]),0,0);
           var morph1 = dom.createMorphAt(dom.childAt(element0, [2, 1]),0,0);
           element(env, element0, context, "bind-attr", [], {"class": ":well :property :col-sm-6 property.isDirty:has-warning:"});
-          element(env, element1, context, "action", [get(env, context, "delete_property"), get(env, context, "property")], {"on": "click"});
+          element(env, element1, context, "action", ["delete_property", get(env, context, "property")], {"on": "click"});
           inline(env, morph0, context, "focus-input", [], {"valueBinding": "property.name", "class": "form-control"});
           inline(env, morph1, context, "view", ["select"], {"content": get(env, context, "property_types"), "valueBinding": "property.type", "class": "form-control"});
           return fragment;
@@ -1642,11 +1653,11 @@ define('ember-src/templates/models/edit', ['exports'], function (exports) {
         var morph3 = dom.createMorphAt(element2,2,2);
         inline(env, morph0, context, "input", [], {"valueBinding": "model.model.class_name", "class": "form-control"});
         inline(env, morph1, context, "view", ["select"], {"content": get(env, context, "model.models"), "optionValuePath": "content.id", "optionLabelPath": "content.class_name", "selectionBinding": "model.model.superclass_model", "class": "form-control"});
-        element(env, element3, context, "action", [get(env, context, "add_property"), get(env, context, "model.model")], {"on": "click"});
+        element(env, element3, context, "action", ["add_property", get(env, context, "model.model")], {"on": "click"});
         inline(env, morph2, context, "view", ["select"], {"content": get(env, context, "model.model.properties"), "selectionBinding": "model.model.id_property", "optionValuePath": "content.id", "optionLabelPath": "content.name", "prompt": "Auto", "class": "form-control"});
         block(env, morph3, context, "each", [get(env, context, "model.model.properties")], {"keyword": "property"}, child0, null);
-        element(env, element4, context, "action", [get(env, context, "delete"), get(env, context, "model.model")], {"on": "click"});
-        element(env, element5, context, "action", [get(env, context, "save"), get(env, context, "model.model")], {"on": "click"});
+        element(env, element4, context, "action", ["delete", get(env, context, "model.model")], {"on": "click"});
+        element(env, element5, context, "action", ["save", get(env, context, "model.model")], {"on": "click"});
         return fragment;
       }
     };
@@ -2101,13 +2112,13 @@ define('ember-src/tests/unit/serializers/application-test', ['ember-qunit'], fun
 /* jshint ignore:start */
 
 define('ember-src/config/environment', ['ember'], function(Ember) {
-  return { 'default': {"modulePrefix":"ember-src","environment":"development","baseURL":"/","locationType":"auto","EmberENV":{"FEATURES":{}},"APP":{"name":"ember-src","version":"0.0.0.cfccf0ee"},"contentSecurityPolicyHeader":"Content-Security-Policy-Report-Only","contentSecurityPolicy":{"default-src":"'none'","script-src":"'self' 'unsafe-eval'","font-src":"'self'","connect-src":"'self'","img-src":"'self'","style-src":"'self'","media-src":"'self'"},"exportApplicationGlobal":true}};
+  return { 'default': {"modulePrefix":"ember-src","environment":"development","baseURL":"/","locationType":"auto","EmberENV":{"FEATURES":{}},"APP":{"name":"ember-src","version":"0.0.0.4cf858b7"},"contentSecurityPolicyHeader":"Content-Security-Policy-Report-Only","contentSecurityPolicy":{"default-src":"'none'","script-src":"'self' 'unsafe-eval'","font-src":"'self'","connect-src":"'self'","img-src":"'self'","style-src":"'self'","media-src":"'self'"},"exportApplicationGlobal":true}};
 });
 
 if (runningTests) {
   require("ember-src/tests/test-helper");
 } else {
-  require("ember-src/app")["default"].create({"name":"ember-src","version":"0.0.0.cfccf0ee"});
+  require("ember-src/app")["default"].create({"name":"ember-src","version":"0.0.0.4cf858b7"});
 }
 
 /* jshint ignore:end */

@@ -4,4 +4,4 @@
 .has-association-list
   each has_association in model
     has-association-diagram has_association=has_association
-      a.btn.btn-danger.pull-right click="delete has_association" DELETE
+      a.btn.btn-danger.pull-right click="'delete' has_association" DELETE

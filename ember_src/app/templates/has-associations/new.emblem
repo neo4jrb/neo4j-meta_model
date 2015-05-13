@@ -58,5 +58,5 @@ form.form-horizontal
         = input class="form-control" valueBinding="model.has_association.relationship_type"
 
 .form-group
-  button.btn.btn-primary click="create model.has_association" Create Association
+  button.btn.btn-primary click="'create' model.has_association" Create Association
 

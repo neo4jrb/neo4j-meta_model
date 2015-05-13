@@ -23,6 +23,15 @@ window.mm_path = (path) ->
 
   base_path + '/' + p
 
+# Send csrf-token on XHR calls
+# From: http://discuss.emberjs.com/t/rails-cant-verify-csrf-token-authenticity-with-ember-data/4110/5
+$(->
+  token = $('meta[name="csrf-token"]').attr('content')
+  $.ajaxPrefilter((options, originalOptions, xhr)->
+    xhr.setRequestHeader('X-CSRF-Token', token)
+  )
+)
+
 Ember.MODEL_FACTORY_INJECTIONS = true
 
 MetaModelApp = Ember.Application.extend

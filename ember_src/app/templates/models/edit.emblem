@@ -14,7 +14,7 @@
 .properties.row
   h2
     | Properties 
-    a.add.btn.btn-default click="add_property model.model" Add Property
+    a.add.btn.btn-default click="'add_property' model.model" Add Property
 
   .form-group
     label
@@ -24,7 +24,7 @@
 
   each property in model.model.properties
     .well.property.col-sm-6 class=property.isDirty:has-warning:
-      i.glyphicon.glyphicon-remove-circle.close.pull-right click="delete_property property"
+      i.glyphicon.glyphicon-remove-circle.close.pull-right click="'delete_property' property"
 
       label
         .col-sm-2.control-label Name
@@ -37,8 +37,8 @@
           view "select" content=property_types valueBinding="property.type" class="form-control"
 
 .form-group
-  button.btn.btn-danger.pull-right click="delete model.model" DELETE!
+  button.btn.btn-danger.pull-right click="'delete' model.model" DELETE!
 
 .form-group
-  button.btn.btn-primary click="save model.model" Update
+  button.btn.btn-primary click="'save' model.model" Update
 

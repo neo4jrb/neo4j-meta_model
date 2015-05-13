@@ -8,4 +8,4 @@ HasAssociationsIndexRoute = Ember.Route.extend
     delete: (has_association) ->
       has_association.destroyRecord()
 
-`export default HasAssociationIndexRoute`
+`export default HasAssociationsIndexRoute`
