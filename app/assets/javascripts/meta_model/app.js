@@ -484,11 +484,8 @@ define('ember-src/routes/models/edit', ['exports', 'ember'], function (exports, 
         return property.destroyRecord();
       },
       save: function(model) {
-        console.log(1);
         model.save();
-        console.log(2);
         return model.get('properties').forEach(function(property) {
-          console.log(3);
           if (property.get('isDirty')) {
             return property.save();
           }
@@ -2112,13 +2109,13 @@ define('ember-src/tests/unit/serializers/application-test', ['ember-qunit'], fun
 /* jshint ignore:start */
 
 define('ember-src/config/environment', ['ember'], function(Ember) {
-  return { 'default': {"modulePrefix":"ember-src","environment":"development","baseURL":"/","locationType":"auto","EmberENV":{"FEATURES":{}},"APP":{"name":"ember-src","version":"0.0.0.4cf858b7"},"contentSecurityPolicyHeader":"Content-Security-Policy-Report-Only","contentSecurityPolicy":{"default-src":"'none'","script-src":"'self' 'unsafe-eval'","font-src":"'self'","connect-src":"'self'","img-src":"'self'","style-src":"'self'","media-src":"'self'"},"exportApplicationGlobal":true}};
+  return { 'default': {"modulePrefix":"ember-src","environment":"development","baseURL":"/","locationType":"auto","EmberENV":{"FEATURES":{}},"APP":{"name":"ember-src","version":"0.0.0.8254ab9c"},"contentSecurityPolicyHeader":"Content-Security-Policy-Report-Only","contentSecurityPolicy":{"default-src":"'none'","script-src":"'self' 'unsafe-eval'","font-src":"'self'","connect-src":"'self'","img-src":"'self'","style-src":"'self'","media-src":"'self'"},"exportApplicationGlobal":true}};
 });
 
 if (runningTests) {
   require("ember-src/tests/test-helper");
 } else {
-  require("ember-src/app")["default"].create({"name":"ember-src","version":"0.0.0.4cf858b7"});
+  require("ember-src/app")["default"].create({"name":"ember-src","version":"0.0.0.8254ab9c"});
 }
 
 /* jshint ignore:end */
