@@ -34,14 +34,18 @@ Rake::TestTask.new(:test) do |t|
 end
 
 namespace :ember do
-  task :build do
-    `cd ember_src && ember build`
-    `mkdir -p app/assets/javascripts/meta_model`
-    `cp ember_src/dist/assets/ember-src.js app/assets/javascripts/meta_model/app.js`
-    `cp ember_src/dist/assets/ember-src.map app/assets/javascripts/meta_model/ember-src.map`
+  def system_or_fail(command)
+    system(command) or fail "Unable to run: #{command}" # rubocop:disable Style/AndOr
+  end
 
-    `cp ember_src/dist/assets/vendor.js    app/assets/javascripts/meta_model/vendor.js`
-    `cp ember_src/dist/assets/vendor.map    app/assets/javascripts/meta_model/vendor.map`
+  task :build do
+    system_or_fail("cd ember_src && ember build")
+    system_or_fail("mkdir -p app/assets/javascripts/meta_model")
+    system_or_fail("cp ember_src/dist/assets/ember-src.js app/assets/javascripts/meta_model/app.js")
+    system_or_fail("cp ember_src/dist/assets/ember-src.map app/assets/javascripts/meta_model/ember-src.map")
+
+    system_or_fail("cp ember_src/dist/assets/vendor.js    app/assets/javascripts/meta_model/vendor.js")
+    system_or_fail("cp ember_src/dist/assets/vendor.map    app/assets/javascripts/meta_model/vendor.map")
   end
 end
 
