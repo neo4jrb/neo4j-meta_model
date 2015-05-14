@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency 'rails', '~> 4.2.0'
-  s.add_dependency 'neo4j', '~> 4.1.0'
+  s.add_dependency 'neo4j', '>= 4.1.0'
   s.add_dependency 'slim-rails'
   s.add_dependency 'active_model_serializers', '0.9.1'
 end
