@@ -1,9 +1,9 @@
 PATH
   remote: .
   specs:
-    neo4j-meta_model (0.3.5)
+    neo4j-meta_model (0.4.0)
       active_model_serializers (= 0.9.1)
-      neo4j (~> 4.1.0)
+      neo4j (>= 4.1.0)
       rails (~> 4.2.0)
       slim-rails
 
@@ -65,13 +65,13 @@ GEM
       faraday (>= 0.7.4, < 0.10)
     globalid (0.3.5)
       activesupport (>= 4.1.0)
-    httparty (0.13.3)
+    httparty (0.13.4)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
     httpclient (2.6.0.1)
     i18n (0.7.0)
     json (1.8.2)
-    loofah (2.0.1)
+    loofah (2.0.2)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
@@ -101,7 +101,7 @@ GEM
       mini_portile (~> 0.6.0)
     orm_adapter (0.5.0)
     os (0.9.6)
-    rack (1.6.0)
+    rack (1.6.1)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.1)
@@ -139,9 +139,9 @@ GEM
       railties (>= 3.1, < 5.0)
       slim (~> 3.0)
     slop (3.6.0)
-    sprockets (3.0.3)
+    sprockets (3.1.0)
       rack (~> 1.0)
-    sprockets-rails (2.2.4)
+    sprockets-rails (2.3.1)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
